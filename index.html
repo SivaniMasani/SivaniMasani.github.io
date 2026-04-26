@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sivani Masani | Data Analyst Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+:root { --navy: #1B2340; --teal: #2A8080; --white: #FFFFFF; }
+body { font-family: 'Barlow', sans-serif; background: var(--navy); color: var(--white); min-height: 100vh; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5%; height: 60px;
+  background: var(--navy); border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.nav-brand {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem;
+  font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--white); text-decoration: none; display: flex; align-items: center; gap: 12px;
+}
+.nav-brand span { border: 1px solid rgba(255,255,255,0.35); padding: 4px 10px; }
+.menu-btn {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--white);
+  background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 10px;
+}
+.hamburger { display: flex; flex-direction: column; gap: 5px; }
+.hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); }
+
+.menu-overlay {
+  position: fixed; inset: 0; background: #111929; z-index: 998;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.menu-overlay.open { opacity: 1; pointer-events: all; }
+.menu-overlay a {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 1rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); text-decoration: none;
+  padding: 1.1rem 0; width: 280px; text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.08); transition: color 0.2s;
+}
+.menu-overlay a:hover { color: var(--white); }
+.menu-overlay a.highlight {
+  border: 1px solid rgba(255,255,255,0.35) !important;
+  color: var(--white); padding: 0.9rem 2rem; margin: 0.5rem 0; width: auto;
+}
+.menu-sub { display: flex; gap: 1.5rem; margin-top: 0.5rem; }
+.menu-sub a { border: none !important; padding: 0.4rem 0 !important; font-size: 0.82rem !important; width: auto !important; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+/* HOME */
+#home { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 70px 5% 2%; }
+.home-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+.home-name { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 700; line-height: 1; margin-bottom: 1rem; }
+.home-divider { width: 55%; height: 1px; background: rgba(255,255,255,0.18); margin-bottom: 1rem; }
+.home-desc { font-size: 0.82rem; font-weight: 300; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(255,255,255,0.55); max-width: 650px; line-height: 1.8; margin-bottom: 1.5rem; }
+.home-cta { display: inline-flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.35); padding: 10px 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); cursor: pointer; background: none; transition: all 0.2s; }
+.home-cta:hover { background: rgba(255,255,255,0.07); }
+
+/* PORTFOLIO GRID */
+#portfolio { padding-top: 60px; min-height: 100vh; }
+.port-header { padding: 0.75rem 5% 0.5rem; }
+.port-header h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.proj-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.proj-block { padding: 2.5rem 5%; cursor: pointer; transition: opacity 0.2s; text-decoration: none; color: var(--white); display: flex; flex-direction: column; justify-content: flex-end; min-height: calc(50vh - 60px); }
+.proj-block:hover { opacity: 0.82; }
+.c1 { background: #2A7F7F; }
+.c2 { background: #3D4F85; }
+.c3 { background: #B85040; }
+.c4 { background: #4A5FA0; }
+.proj-block-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.1; }
+.proj-block-line { width: 100%; height: 1px; background: rgba(255,255,255,0.25); margin-bottom: 1rem; }
+.proj-block-desc { font-size: 0.75rem; font-weight: 300; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(255,255,255,0.65); line-height: 1.9; }
+
+/* DETAIL PAGES */
+.detail-wrap { padding: 70px 5% 3%; min-height: 100vh; }
+.back-btn { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); cursor: pointer; background: none; border: none; margin-bottom: 2.5rem; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s; }
+.back-btn:hover { color: var(--white); }
+.detail-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.75rem; display: block; }
+.detail-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.25rem; }
+.detail-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.12); margin-bottom: 2.5rem; }
+.metrics-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
+.metric-box { border: 1px solid rgba(255,255,255,0.12); padding: 1.1rem 1.5rem; min-width: 130px; }
+.metric-val { font-family: 'Barlow Condensed', sans-serif; font-size: 1.9rem; font-weight: 700; color: var(--teal); display: block; margin-bottom: 0.25rem; }
+.metric-lbl { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; margin-bottom: 2.5rem; }
+.section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.85rem; margin-top: 1.75rem; }
+.detail-text { font-size: 0.9rem; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.85; }
+.find-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.find-list li { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.65); padding-left: 1.2rem; position: relative; line-height: 1.6; }
+.find-list li::before { content: '→'; position: absolute; left: 0; color: var(--teal); font-size: 0.78rem; top: 0.05rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+.tag { border: 1px solid rgba(255,255,255,0.18); padding: 3px 11px; font-size: 0.7rem; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.gh-link { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(255,255,255,0.28); padding: 11px 22px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); text-decoration: none; margin-top: 2rem; transition: background 0.2s; }
+.gh-link:hover { background: rgba(255,255,255,0.07); }
+
+/* ABOUT */
+.about-wrap { padding: 70px 5% 3%; min-height: 100vh; }
+.about-name { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; margin-bottom: 0.75rem; }
+.about-divider { width: 45%; height: 1px; background: rgba(255,255,255,0.18); margin-bottom: 1.5rem; }
+.about-h { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 0.75rem; margin-top: 1.5rem; }
+.about-p { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.8; max-width: 680px; margin-bottom: 0.75rem; }
+.skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+.skill-list li { font-size: 0.86rem; color: rgba(255,255,255,0.65); font-weight: 300; padding-left: 1rem; position: relative; }
+.skill-list li::before { content: '•'; position: absolute; left: 0; color: var(--teal); }
+.skill-list li strong { color: var(--white); font-weight: 600; }
+
+/* CONTACT */
+.contact-wrap { padding: 70px 5% 3%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+.contact-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; margin-bottom: 1rem; }
+.contact-divider { width: 35%; height: 1px; background: rgba(255,255,255,0.18); margin-bottom: 2.5rem; }
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 680px; margin-top: 1rem; }
+.c-icon { font-size: 1.4rem; margin-bottom: 0.6rem; display: block; }
+.c-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.c-val { font-size: 0.8rem; color: rgba(255,255,255,0.45); font-weight: 300; }
+.c-val a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+.c-val a:hover { color: var(--white); }
+
+@media (max-width: 680px) {
+  .proj-grid { grid-template-columns: 1fr; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#" onclick="show('home')">
+    <span>DATA ANALYST PORTFOLIO</span> BY SIVANI MASANI
+  </a>
+  <button class="menu-btn" onclick="toggleMenu()">
+    MENU
+    <div class="hamburger"><span></span><span></span></div>
+  </button>
+</nav>
+
+<div class="menu-overlay" id="mOverlay">
+  <a href="#" onclick="show('home');toggleMenu()">HOME</a>
+  <a href="#" onclick="show('about');toggleMenu()">ABOUT</a>
+  <a href="#" onclick="show('contact');toggleMenu()">CONTACT</a>
+  <a href="#" class="highlight" onclick="show('portfolio');toggleMenu()">PORTFOLIO PROJECTS</a>
+  <div class="menu-sub">
+    <a href="#" onclick="show('p-churn');toggleMenu()">Python & ML</a>
+    <a href="#" onclick="show('p-sql');toggleMenu()">SQL</a>
+    <a href="#" onclick="show('p-excel');toggleMenu()">Excel</a>
+    <a href="#" onclick="show('p-ev');toggleMenu()">Power BI</a>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div id="home" style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 5% 5%;">
+    <div class="home-label">Data Analyst Portfolio — Hyderabad, India</div>
+    <h1 class="home-name">Sivani<br>Masani</h1>
+    <div class="home-divider"></div>
+    <p class="home-desc">Passionate data analyst with a knack for transforming raw data into actionable insights. Proficient in Python, SQL, Power BI, and Excel — I bring a strong analytical mindset and technical skill set, dedicated to driving informed decision-making through data-driven solutions.</p>
+    <button class="home-cta" onclick="show('portfolio')">PORTFOLIO PROJECTS →</button>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<div id="portfolio" class="page">
+  <div class="port-header"><h2>PORTFOLIO PROJECTS</h2></div>
+  <div class="proj-grid">
+    <a class="proj-block c1" href="#" onclick="show('p-churn');return false;">
+      <div class="proj-block-title">Machine Learning<br>Projects with Python</div>
+      <div class="proj-block-line"></div>
+      <div class="proj-block-desc">These projects demonstrate my proficiency in building ML models for classification and prediction — customer churn prediction using Logistic Regression achieving 82% accuracy on 7,043 records.</div>
+    </a>
+    <a class="proj-block c2" href="#" onclick="show('p-ev');return false;">
+      <div class="proj-block-title">Power BI<br>Dashboards</div>
+      <div class="proj-block-line"></div>
+      <div class="proj-block-desc">These projects demonstrate my proficiency in building insightful, interactive data visualisations and dashboards for effective analysis and business decision making using DAX and Power BI.</div>
+    </a>
+    <a class="proj-block c3" href="#" onclick="show('p-excel');return false;">
+      <div class="proj-block-title">Excel<br>Projects</div>
+      <div class="proj-block-line"></div>
+      <div class="proj-block-desc">These projects demonstrate my proficiency in data manipulation, analysis and visualisation leveraging Excel's powerful built-in tools including Pivot Tables, Slicers and Conditional Formatting.</div>
+    </a>
+    <a class="proj-block c4" href="#" onclick="show('p-sql');return false;">
+      <div class="proj-block-title">SQL<br>Projects</div>
+      <div class="proj-block-line"></div>
+      <div class="proj-block-desc">These projects demonstrate my proficiency in crafting efficient SQL queries — CTEs, Window Functions, JOINs — and harnessing the capabilities of database management systems for business insights.</div>
+    </a>
+  </div>
+</div>
+
+<!-- CHURN PROJECT -->
+<div id="p-churn" class="page">
+  <div class="detail-wrap">
+    <button class="back-btn" onclick="show('portfolio')">← BACK TO PROJECTS</button>
+    <span class="detail-tag">Python · Machine Learning · Power BI · Scikit-learn</span>
+    <h1 class="detail-title">Customer Churn<br>Analysis & Prediction</h1>
+    <div class="detail-divider"></div>
+    <div class="metrics-row">
+      <div class="metric-box"><span class="metric-val">82%</span><span class="metric-lbl">Model Accuracy</span></div>
+      <div class="metric-box"><span class="metric-val">26.5%</span><span class="metric-lbl">Churn Rate Found</span></div>
+      <div class="metric-box"><span class="metric-val">$13.18</span><span class="metric-lbl">Avg Price Difference</span></div>
+      <div class="metric-box"><span class="metric-val">$8,200+</span><span class="metric-lbl">Monthly Business Impact</span></div>
+      <div class="metric-box"><span class="metric-val">7,043</span><span class="metric-lbl">Customers Analysed</span></div>
+    </div>
+    <div class="detail-grid">
+      <div>
+        <div class="section-label">BUSINESS PROBLEM</div>
+        <p class="detail-text">A telecom company was losing 1 in 4 customers and needed to understand why — and predict which customers would leave next so the retention team could act before it's too late.</p>
+        <div class="section-label">KEY FINDINGS</div>
+        <ul class="find-list">
+          <li>26.5% overall churn rate — 1 in 4 customers leaving</li>
+          <li>Month-to-month contracts have the highest churn rate</li>
+          <li>Fiber optic customers churn significantly more than DSL</li>
+          <li>Churned customers pay $13.18 more per month on average</li>
+          <li>Customers who churn leave within the first few months</li>
+          <li>Total charges and tenure are the top churn drivers</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label">APPROACH</div>
+        <p class="detail-text">Complete end-to-end data pipeline — raw data cleaning, EDA with 5 business charts, Logistic Regression model trained on 5,634 records and tested on 1,409 achieving 82% accuracy. Results presented in an interactive Power BI dashboard.</p>
+        <div class="section-label">TOOLS USED</div>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Scikit-learn</span>
+          <span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag">Power BI</span><span class="tag">Google Colab</span>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/SivaniMasani/Customer-Churn-Analysis" target="_blank" class="gh-link">VIEW ON GITHUB →</a>
+  </div>
+</div>
+
+<!-- EV PROJECT -->
+<div id="p-ev" class="page">
+  <div class="detail-wrap">
+    <button class="back-btn" onclick="show('portfolio')">← BACK TO PROJECTS</button>
+    <span class="detail-tag">Power BI · DAX · Interactive Dashboard</span>
+    <h1 class="detail-title">Electric Vehicle<br>Analysis Dashboard</h1>
+    <div class="detail-divider"></div>
+    <div class="metrics-row">
+      <div class="metric-box"><span class="metric-val">150K+</span><span class="metric-lbl">Vehicles Analysed</span></div>
+      <div class="metric-box"><span class="metric-val">46%</span><span class="metric-lbl">Tesla Market Share</span></div>
+      <div class="metric-box"><span class="metric-val">78%</span><span class="metric-lbl">BEV Adoption Rate</span></div>
+      <div class="metric-box"><span class="metric-val">67.83mi</span><span class="metric-lbl">Avg Electric Range</span></div>
+    </div>
+    <div class="detail-grid">
+      <div>
+        <div class="section-label">BUSINESS PROBLEM</div>
+        <p class="detail-text">Analyse electric vehicle registration data across the USA to understand EV adoption trends, manufacturer market share, geographic distribution and electric range performance.</p>
+        <div class="section-label">KEY FINDINGS</div>
+        <ul class="find-list">
+          <li>Tesla dominates with 68,983 vehicles — nearly half of all EVs</li>
+          <li>BEV (fully electric) at 78% vs 22% PHEV (hybrid)</li>
+          <li>EV registrations peaked at 37K in 2023 — up from 1K in 2015</li>
+          <li>Jaguar leads on average electric range at 204 miles</li>
+          <li>Washington state leads EV adoption geographically</li>
+          <li>41.81% of vehicles are CAFV eligible</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label">DASHBOARD FEATURES</div>
+        <p class="detail-text">Interactive Power BI dashboard with dynamic slicers for City, Electric Type and Vehicle Type. Includes map visual for geographic distribution, donut chart for CAFV eligibility, treemap for top models and line chart for adoption trend by year.</p>
+        <div class="section-label">TOOLS USED</div>
+        <div class="tags">
+          <span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Map Visual</span>
+          <span class="tag">Slicers</span><span class="tag">Treemap</span><span class="tag">Data Modelling</span>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/SivaniMasani/POWERBI-PROJECTS" target="_blank" class="gh-link">VIEW ON GITHUB →</a>
+  </div>
+</div>
+
+<!-- EXCEL PROJECT -->
+<div id="p-excel" class="page">
+  <div class="detail-wrap">
+    <button class="back-btn" onclick="show('portfolio')">← BACK TO PROJECTS</button>
+    <span class="detail-tag">Excel · Pivot Tables · Data Analysis</span>
+    <h1 class="detail-title">Excel<br>Projects</h1>
+    <div class="detail-divider"></div>
+    <div class="metrics-row">
+      <div class="metric-box"><span class="metric-val">£213K</span><span class="metric-lbl">Transaction Revenue</span></div>
+      <div class="metric-box"><span class="metric-val">443</span><span class="metric-lbl">Transactions Analysed</span></div>
+      <div class="metric-box"><span class="metric-val">76%</span><span class="metric-lbl">In-Store Success Rate</span></div>
+      <div class="metric-box"><span class="metric-val">150K+</span><span class="metric-lbl">EV Records Analysed</span></div>
+    </div>
+    <div class="detail-grid">
+      <div>
+        <div class="section-label">PROJECT 1 — CUSTOMER TRANSACTION ANALYSIS</div>
+        <p class="detail-text">Retail store transaction analysis across Dec 2023 — Feb 2024. Used Pivot Tables, Slicers and Charts to identify channel performance, customer spending patterns and monthly revenue trends.</p>
+        <ul class="find-list" style="margin-top:0.75rem;">
+          <li>Website drives highest revenue — £81,070 across 182 transactions</li>
+          <li>In-store has highest success rate at 76%</li>
+          <li>Professor segment spends most — £35,225 total</li>
+          <li>Revenue declined 30% from Dec £83K to Feb £58K</li>
+          <li>Phone channel underperforming — only 26 transactions</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label">PROJECT 2 — EV POPULATION ANALYSIS</div>
+        <p class="detail-text">Analysis of 150K+ electric vehicle registrations using Pivot Tables and average calculations to uncover manufacturer rankings and electric range performance across makes.</p>
+        <ul class="find-list" style="margin-top:0.75rem;">
+          <li>Tesla leads with 68,983 vehicles — 46% market share</li>
+          <li>BEV dominates at 78% vs 22% PHEV</li>
+          <li>Jaguar highest average range — 204 miles</li>
+          <li>Chevrolet average range — 95 miles</li>
+        </ul>
+        <div class="section-label">TOOLS USED</div>
+        <div class="tags">
+          <span class="tag">Excel</span><span class="tag">Pivot Tables</span>
+          <span class="tag">Pivot Charts</span><span class="tag">Slicers</span><span class="tag">Conditional Formatting</span>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/SivaniMasani/EXCEL-PROJECTS" target="_blank" class="gh-link">VIEW ON GITHUB →</a>
+  </div>
+</div>
+
+<!-- SQL PROJECT -->
+<div id="p-sql" class="page">
+  <div class="detail-wrap">
+    <button class="back-btn" onclick="show('portfolio')">← BACK TO PROJECTS</button>
+    <span class="detail-tag">SQL · MySQL · CTEs · Window Functions</span>
+    <h1 class="detail-title">SQL<br>Projects</h1>
+    <div class="detail-divider"></div>
+    <div class="metrics-row">
+      <div class="metric-box"><span class="metric-val">$817K</span><span class="metric-lbl">Pizza Revenue Found</span></div>
+      <div class="metric-box"><span class="metric-val">18,526</span><span class="metric-lbl">Large Pizza Orders</span></div>
+      <div class="metric-box"><span class="metric-val">$320K</span><span class="metric-lbl">Walmart Revenue</span></div>
+      <div class="metric-box"><span class="metric-val">Branch C</span><span class="metric-lbl">Top Walmart Branch</span></div>
+    </div>
+    <div class="detail-grid">
+      <div>
+        <div class="section-label">PROJECT 1 — PIZZA SALES ANALYSIS</div>
+        <p class="detail-text">End-to-end SQL analysis identifying top revenue drivers, best-selling products and customer purchasing patterns for a pizza restaurant chain using advanced SQL techniques.</p>
+        <ul class="find-list" style="margin-top:0.75rem;">
+          <li>Total revenue: $817,860 across all orders</li>
+          <li>Large size most popular — 18,526 orders</li>
+          <li>Classic category leads revenue at $220,053</li>
+          <li>Used CTEs, Window Functions and JOINs</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label">PROJECT 2 — WALMART SALES FORECASTING</div>
+        <p class="detail-text">Multi-branch Walmart sales analysis with feature engineering to identify peak sales periods, top product lines and revenue-driving customer segments.</p>
+        <ul class="find-list" style="margin-top:0.75rem;">
+          <li>Total revenue: $320,886 across all branches</li>
+          <li>Branch C leads with $110,491 in revenue</li>
+          <li>Evening peak — 429 transactions</li>
+          <li>Saturday busiest day — 164 transactions</li>
+          <li>Food & Beverages top product line — $56,145</li>
+        </ul>
+        <div class="section-label">TOOLS USED</div>
+        <div class="tags">
+          <span class="tag">MySQL</span><span class="tag">CTEs</span>
+          <span class="tag">Window Functions</span><span class="tag">JOINs</span><span class="tag">Feature Engineering</span>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/SivaniMasani/SQL-PROJECTS" target="_blank" class="gh-link">VIEW ON GITHUB →</a>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="page">
+  <div class="about-wrap">
+    <h1 class="about-name">Sivani Masani</h1>
+    <div class="about-divider"></div>
+    <div class="about-h">Overview</div>
+    <p class="about-p">Passionate Data Analyst with experience across energy and construction sectors, specialising in transforming raw business data into actionable insights. Proven ability to build end-to-end data pipelines — from cleaning and EDA to machine learning and interactive dashboards.</p>
+    <p class="about-p">Recently built a customer churn prediction model achieving 82% accuracy with an estimated $8,200/month business impact. Skilled at communicating complex findings to non-technical stakeholders across finance, billing and IT teams.</p>
+    <div class="about-h">Skills</div>
+    <ul class="skill-list">
+      <li><strong>Languages & Tools:</strong> Python, SQL, Excel, Power BI</li>
+      <li><strong>Python Libraries:</strong> Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn</li>
+      <li><strong>Machine Learning:</strong> Logistic Regression, Random Forest, KNN</li>
+      <li><strong>SQL:</strong> CTEs, Window Functions, JOINs, Aggregate Functions</li>
+      <li><strong>Power BI:</strong> DAX Measures, Dashboards, Slicers, Data Modelling</li>
+      <li><strong>Excel:</strong> Pivot Tables, VLOOKUP, Conditional Formatting, Charts</li>
+      <li><strong>ERP Systems:</strong> COINS, Junifer — energy and construction sectors</li>
+      <li><strong>Other:</strong> ETL, Data Cleaning, EDA, Statistical Analysis, Agile, Jira</li>
+    </ul>
+    <div class="about-h">Experience</div>
+    <ul class="skill-list">
+      <li><strong>Commercial Admin — Barratt Developments</strong> (Oct 2024 – Feb 2025)</li>
+      <li><strong>Junifer Admin — YU Energy</strong> (May 2024 – Oct 2024)</li>
+      <li><strong>Data Admin — Npower Business Solutions (EON)</strong> (Dec 2023 – Apr 2024)</li>
+    </ul>
+    <div class="about-h">Education</div>
+    <ul class="skill-list">
+      <li><strong>MSc Data Analysis for Business Intelligence</strong> — Merit — University of Leicester, UK (2023)</li>
+      <li><strong>MSc Mathematics</strong> — Merit — St Ann's Women College, OU, Hyderabad (2021)</li>
+      <li><strong>BSc Mathematics, Electronics & Computer Science</strong> — 9.19 CGPA — Osmania University (2019)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="page">
+  <div class="contact-wrap">
+    <h1 class="contact-title">Get In Touch</h1>
+    <div class="contact-divider"></div>
+    <p class="about-p">I am actively looking for Data Analyst roles. If you have an opportunity or just want to connect — reach out!</p>
+    <div class="contact-grid">
+      <div>
+        <span class="c-icon">📧</span>
+        <div class="c-label">Email</div>
+        <div class="c-val"><a href="mailto:masanisivani226@gmail.com">masanisivani226@gmail.com</a></div>
+      </div>
+      <div>
+        <span class="c-icon">📍</span>
+        <div class="c-label">Location</div>
+        <div class="c-val">Hyderabad, India</div>
+      </div>
+      <div>
+        <span class="c-icon">🔗</span>
+        <div class="c-label">Other</div>
+        <div class="c-val">
+          <a href="https://www.linkedin.com/in/sivanimasani/" target="_blank">LinkedIn</a>
+          &nbsp;·&nbsp;
+          <a href="https://github.com/SivaniMasani" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('active'); window.scrollTo(0,0); }
+}
+function toggleMenu() {
+  document.getElementById('mOverlay').classList.toggle('open');
+}
+</script>
+</body>
+</html>
